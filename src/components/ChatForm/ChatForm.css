@@ -1,11 +1,42 @@
-.ChatForm-comment {
-    border: 1px solid black;
-    border-radius: 4px;
-    padding: 2px;
+.Messages-Comment {
+    width: 300px;
+    display:block;
+    border: 1px solid grey;
+    border-radius: 16px;
+    padding: 10px;
     margin: 10px;
     text-align: center;
+    background-color:cornsilk;
+    color: forestgreen;
 }
 .ChatForm {
    position: absolute;
    bottom: 0px;
+}
+.Messages-Button{
+    display: none;
+
+}
+.Messages-Comment:hover .Messages-Button {
+    display: block;
+    transition: 1s;
+}
+.ChatForm-Input {
+    width: 500px;
+}
+.ChatForm-Button {
+    width: 100px;
+    padding: 10px;
+    border-radius: 16px;
+    border:none;
+    background-color:cornsilk;
+    color: forestgreen;
+}
+.Messages-ButtonStyle {
+    padding: 6px;
+    border-radius: 16px;
+    border:1px solid grey;
+    background-color: aquamarine;
+    color: forestgreen;
+    margin-top: 4px;
 }

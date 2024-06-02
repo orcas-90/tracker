@@ -1,81 +1,46 @@
 import React, { ChangeEvent, useState } from 'react';
+import { Messages } from './components/Messages/Messages';
 import logo from './logo.svg';
 import { type MouseEvent } from 'react';
 import './App.css';
 import { ChatForm } from './components/ChatForm/ChatForm';
 import { uid } from 'uid';
 import { cnChatForm } from './components/ChatForm/ChatForm.classname';
+import EmojiPicker from 'emoji-picker-react';
 
 function App() {
-
-
   type Comment = {
     comment: string;
-    id: string;
+    id?: string;
   };
 
   const [addComments, setAddComments] = useState<Comment[]>([]);
-  const [absentButton, setAbsentButton] = useState('None');
-  const [addAnswers, setAnswers] = useState('')
+  const [addAnswers, setAnswers] = useState('');
 
-  const handleAddElement = (comment: string, id: string) => {
+  const handleAddElement = (comment: string) => {
     setAddComments((prev) => [
       ...prev,
       {
         comment,
-        id: uid(5),
+        // id: uid(5),
       },
     ]);
+    setAnswers('');
   };
 
-  const handleMouseEnter = (event: MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const target = event.target;
-   // console.log(target)
-    if (target) {
-    setAbsentButton('block')
-    } else setAbsentButton('none')
+  const handleClickAnswer = (text: string | undefined) => {
+    setAnswers(text + ': ');
+    
   };
-  const handleMouseLeave = (event:MouseEvent) => {
-  event.preventDefault();
-    setAbsentButton('none')
-  }
-  const handleClickAnswer = (event:MouseEvent) => {
-    const target = event.target;
-    if (target instanceof HTMLButtonElement) {
-
-     setAnswers(target.id)
-
-    console.log(addAnswers)
-    }
-  };
-
-
-  /*const getDeleteIcon = (indexCur: string) => {
-    return () => {
-      setAddIcon((prev) => prev.filter((icon) => icon.id !== indexCur));
-    };
-  };*/
 
   return (
     <div className="App">
       <div>
         {addComments.map((elem) => (
-          <div
-            className={cnChatForm('comment')}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            key={elem.id}   //style={{ top: elem.top, left: elem.left }}
-          >
-            {elem.comment}
-            <div className={cnChatForm('button')} style={{display:absentButton}}>
-              <button onClick={handleClickAnswer} id={elem.comment}>Answer</button>
-              <button>Reactions</button>
-            </div>
-          </div>
+          <Messages text={elem.comment} onClick={handleClickAnswer}></Messages>
         ))}
       </div>
-      <ChatForm onSubmit={handleAddElement} value={addAnswers}></ChatForm>
+      <ChatForm onSubmit={handleAddElement} forms={addAnswers}></ChatForm>
     </div>
   );
 }
